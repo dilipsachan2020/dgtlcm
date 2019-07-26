@@ -1,0 +1,198 @@
+<?xml version='1.0' encoding='utf-8' ?>
+
+<!-- build 20191.19.0213.2333                               -->
+<datasource formatted-name='federated.0tf8h9205auksl1b7ayvx0kwahjs' inline='true' source-platform='win' version='18.1' xmlns:user='http://www.tableausoftware.com/xml/user'>
+  <connection class='federated'>
+    <named-connections>
+      <named-connection caption='PostgresProd' name='postgres.0f4eb0e125w1md19lq0fi13k6pjb'>
+        <connection authentication='username-password' class='postgres' dbname='postgres' odbc-native-protocol='' one-time-sql='' port='5432' server='esocdb02' server-oauth='' server-userid='3' username='omc' workgroup-auth-mode='prompt' />
+      </named-connection>
+    </named-connections>
+    <relation join='inner' type='join'>
+      <clause type='join'>
+        <expression op='='>
+          <expression op='1' />
+          <expression op='1' />
+        </expression>
+      </clause>
+      <relation join='inner' type='join'>
+        <clause type='join'>
+          <expression op='='>
+            <expression op='1' />
+            <expression op='1' />
+          </expression>
+        </clause>
+        <relation join='inner' type='join'>
+          <clause type='join'>
+            <expression op='='>
+              <expression op='1' />
+              <expression op='1' />
+            </expression>
+          </clause>
+          <relation connection='postgres.0f4eb0e125w1md19lq0fi13k6pjb' name='KQI(Inbound)-LTE' type='text'>select COALESCE(sum(soc_lte_site_5_min.tot_events_roam_nat),0) + COALESCE (sum(soc_lte_site_5_min.tot_events_roam_int),0) as tot_events_lte , COALESCE(sum(soc_lte_site_5_min.tot_fails_roam_nat),0) + COALESCE(sum(soc_lte_site_5_min.tot_fails_roam_int),0) as tot_fails_lte from soc_lte_site_5_min where report_time = (select max(report_time) from  soc_lte_site_5_min)</relation>
+          <relation connection='postgres.0f4eb0e125w1md19lq0fi13k6pjb' name='KPI(Inbound)-3G' type='text'>select COALESCE(sum(soc_3G_site_5_min.tot_events_roam_nat),0) + COALESCE (sum(soc_3G_site_5_min.tot_events_roam_int),0) as tot_events_3g , COALESCE(sum(soc_3g_site_5_min.tot_fails_roam_nat),0) + COALESCE(sum(soc_3g_site_5_min.tot_fails_roam_int),0) as tot_fails_3g from soc_3g_site_5_min where report_time = (select max(report_time) from  soc_3g_site_5_min)</relation>
+        </relation>
+        <relation connection='postgres.0f4eb0e125w1md19lq0fi13k6pjb' name='KPI(Outbound) - 3G' type='text'>Select sum(tot_events_roam_out) as tot_events_roam_out_3G,sum(tot_fails_roam_out) as tot_fails_roam_out_3G from soc_3g_site_5_min where report_time = (select max(report_time) from  soc_3g_site_5_min)</relation>
+      </relation>
+      <relation connection='postgres.0f4eb0e125w1md19lq0fi13k6pjb' name='KPI(Outbound)-LTE' type='text'>Select sum(tot_events_roam_out) as tot_events_roam_out_lte,sum(tot_fails_roam_out) as tot_fails_roam_out_lte from soc_lte_site_5_min where report_time =(select max(report_time) from  soc_lte_site_5_min)</relation>
+    </relation>
+    <metadata-records>
+      <metadata-record class='column'>
+        <remote-name>tot_events_lte</remote-name>
+        <remote-type>5</remote-type>
+        <local-name>[tot_events_lte]</local-name>
+        <parent-name>[KQI(Inbound)-LTE]</parent-name>
+        <remote-alias>tot_events_lte</remote-alias>
+        <ordinal>1</ordinal>
+        <local-type>real</local-type>
+        <aggregation>Sum</aggregation>
+        <precision>8</precision>
+        <contains-null>true</contains-null>
+        <attributes>
+          <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_FLOAT&quot;</attribute>
+          <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_DOUBLE&quot;</attribute>
+        </attributes>
+      </metadata-record>
+      <metadata-record class='column'>
+        <remote-name>tot_fails_lte</remote-name>
+        <remote-type>5</remote-type>
+        <local-name>[tot_fails_lte]</local-name>
+        <parent-name>[KQI(Inbound)-LTE]</parent-name>
+        <remote-alias>tot_fails_lte</remote-alias>
+        <ordinal>2</ordinal>
+        <local-type>real</local-type>
+        <aggregation>Sum</aggregation>
+        <precision>8</precision>
+        <contains-null>true</contains-null>
+        <attributes>
+          <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_FLOAT&quot;</attribute>
+          <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_DOUBLE&quot;</attribute>
+        </attributes>
+      </metadata-record>
+      <metadata-record class='column'>
+        <remote-name>tot_events_3g</remote-name>
+        <remote-type>5</remote-type>
+        <local-name>[tot_events_3g]</local-name>
+        <parent-name>[KPI(Inbound)-3G]</parent-name>
+        <remote-alias>tot_events_3g</remote-alias>
+        <ordinal>4</ordinal>
+        <local-type>real</local-type>
+        <aggregation>Sum</aggregation>
+        <precision>8</precision>
+        <contains-null>true</contains-null>
+        <attributes>
+          <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_FLOAT&quot;</attribute>
+          <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_DOUBLE&quot;</attribute>
+        </attributes>
+      </metadata-record>
+      <metadata-record class='column'>
+        <remote-name>tot_fails_3g</remote-name>
+        <remote-type>5</remote-type>
+        <local-name>[tot_fails_3g]</local-name>
+        <parent-name>[KPI(Inbound)-3G]</parent-name>
+        <remote-alias>tot_fails_3g</remote-alias>
+        <ordinal>5</ordinal>
+        <local-type>real</local-type>
+        <aggregation>Sum</aggregation>
+        <precision>8</precision>
+        <contains-null>true</contains-null>
+        <attributes>
+          <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_FLOAT&quot;</attribute>
+          <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_DOUBLE&quot;</attribute>
+        </attributes>
+      </metadata-record>
+      <metadata-record class='column'>
+        <remote-name>tot_events_roam_out_3g</remote-name>
+        <remote-type>131</remote-type>
+        <local-name>[tot_events_roam_out_3g]</local-name>
+        <parent-name>[KPI(Outbound) - 3G]</parent-name>
+        <remote-alias>tot_events_roam_out_3g</remote-alias>
+        <ordinal>7</ordinal>
+        <local-type>real</local-type>
+        <aggregation>Sum</aggregation>
+        <precision>30</precision>
+        <scale>6</scale>
+        <contains-null>true</contains-null>
+        <attributes>
+          <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_NUMERIC&quot;</attribute>
+          <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_NUMERIC&quot;</attribute>
+        </attributes>
+      </metadata-record>
+      <metadata-record class='column'>
+        <remote-name>tot_fails_roam_out_3g</remote-name>
+        <remote-type>131</remote-type>
+        <local-name>[tot_fails_roam_out_3g]</local-name>
+        <parent-name>[KPI(Outbound) - 3G]</parent-name>
+        <remote-alias>tot_fails_roam_out_3g</remote-alias>
+        <ordinal>8</ordinal>
+        <local-type>real</local-type>
+        <aggregation>Sum</aggregation>
+        <precision>30</precision>
+        <scale>6</scale>
+        <contains-null>true</contains-null>
+        <attributes>
+          <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_NUMERIC&quot;</attribute>
+          <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_NUMERIC&quot;</attribute>
+        </attributes>
+      </metadata-record>
+      <metadata-record class='column'>
+        <remote-name>tot_events_roam_out_lte</remote-name>
+        <remote-type>131</remote-type>
+        <local-name>[tot_events_roam_out_lte]</local-name>
+        <parent-name>[KPI(Outbound)-LTE]</parent-name>
+        <remote-alias>tot_events_roam_out_lte</remote-alias>
+        <ordinal>10</ordinal>
+        <local-type>real</local-type>
+        <aggregation>Sum</aggregation>
+        <precision>30</precision>
+        <scale>6</scale>
+        <contains-null>true</contains-null>
+        <attributes>
+          <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_NUMERIC&quot;</attribute>
+          <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_NUMERIC&quot;</attribute>
+        </attributes>
+      </metadata-record>
+      <metadata-record class='column'>
+        <remote-name>tot_fails_roam_out_lte</remote-name>
+        <remote-type>131</remote-type>
+        <local-name>[tot_fails_roam_out_lte]</local-name>
+        <parent-name>[KPI(Outbound)-LTE]</parent-name>
+        <remote-alias>tot_fails_roam_out_lte</remote-alias>
+        <ordinal>11</ordinal>
+        <local-type>real</local-type>
+        <aggregation>Sum</aggregation>
+        <precision>30</precision>
+        <scale>6</scale>
+        <contains-null>true</contains-null>
+        <attributes>
+          <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_NUMERIC&quot;</attribute>
+          <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_NUMERIC&quot;</attribute>
+        </attributes>
+      </metadata-record>
+    </metadata-records>
+  </connection>
+  <aliases enabled='yes' />
+  <column caption='Inbound-3G' datatype='real' name='[Calculation_137641302518390789]' role='measure' type='quantitative'>
+    <calculation class='tableau' formula='if isnull(SUM([tot_events_3g]-[tot_fails_3g])/SUM([tot_events_3g])) then 0 else SUM([tot_events_3g]-[tot_fails_3g])/SUM([tot_events_3g]) end' />
+  </column>
+  <column caption='Inbound-LTE' datatype='real' name='[Calculation_426716103965384704]' role='measure' type='quantitative'>
+    <calculation class='tableau' formula='if isnull(SUM([tot_events_lte]-[tot_fails_lte])/SUM([tot_events_lte])) then 0 else SUM([tot_events_lte]-[tot_fails_lte])/SUM([tot_events_lte]) end' />
+  </column>
+  <column caption='Outbound-3G' datatype='real' name='[Calculation_426716103965536257]' role='measure' type='quantitative'>
+    <calculation class='tableau' formula='if isnull(SUM([tot_events_roam_out_3g]-[tot_fails_roam_out_3g])/SUM([tot_events_roam_out_3g])) then 0 else SUM([tot_events_roam_out_3g]-[tot_fails_roam_out_3g])/SUM([tot_events_roam_out_3g]) end' />
+  </column>
+  <column caption='Outbound-LTE' datatype='real' name='[Calculation_426716103965720578]' role='measure' type='quantitative'>
+    <calculation class='tableau' formula='if isnull(SUM([tot_events_roam_out_lte]-[tot_fails_roam_out_lte])/SUM([tot_events_roam_out_lte])) then 0 else SUM([tot_events_roam_out_lte]-[tot_fails_roam_out_lte])/SUM([tot_events_roam_out_lte]) end' />
+  </column>
+  <column datatype='integer' name='[Number of Records]' role='measure' type='quantitative' user:auto-column='numrec'>
+    <calculation class='tableau' formula='1' />
+  </column>
+  <column datatype='real' name='[tot_events_3g]' role='measure' type='quantitative' />
+  <column datatype='real' name='[tot_events_lte]' role='measure' type='quantitative' />
+  <layout dim-ordering='alphabetic' dim-percentage='0.155425' measure-ordering='alphabetic' measure-percentage='0.844575' show-structure='true' user-set-layout='true' />
+  <semantic-values>
+    <semantic-value key='[Country].[Name]' value='&quot;India&quot;' />
+  </semantic-values>
+  <filter class='quantitative' column='[tot_events_3g]' filter-group='2' included-values='non-null' />
+  <filter class='quantitative' column='[tot_events_lte]' filter-group='2' included-values='non-null' />
+</datasource>
